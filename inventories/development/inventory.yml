@@ -1,0 +1,16 @@
+all:
+  children:
+    webservers:
+      hosts:
+        nginx:
+          ansible_host: nginx
+          ansible_connection: docker
+        apache:
+          ansible_host: apache
+          ansible_connection: docker
+    dbservers:
+      hosts:
+        mysql:
+          ansible_host: mysql
+          ansible_connection: docker
+

@@ -1,0 +1,18 @@
+---
+- name: Configure Nginx
+  when: inventory_hostname == "nginx"
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/conf.d/default.conf
+
+- name: Create Nginx index.html
+  when: inventory_hostname == "nginx"
+  copy:
+    content: "Welcome to the Nginx server!"
+    dest: /usr/share/nginx/html/index.html
+
+- name: Configure Apache
+  when: inventory_hostname == "apache"
+  copy:
+    content: "Welcome to the Apache server!"
+    dest: /usr/local/apache2/htdocs/index.html

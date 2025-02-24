@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  ansible-control:
+    image: ubuntu:latest 
+    container_name: ansible-control
+    volumes:
+      - .:/my-ansible-project
+    working_dir: /my-ansible-project
+    tty: true
+    stdin_open: true
+    build:
+      context: .
+    networks:
+      - ansible-net
+
+  nginx:
+    image: nginx:latest 
+    container_name: nginx
+    ports:
+      - "8080:80"
+    networks:
+      - ansible-net
+
+  apache:
+    image: httpd:latest
+    container_name: apache
+    ports:
+      - "8081:80"
+    networks:
+      - ansible-net
+
+  mysql:
+    image: mysql:latest 
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ansible_db
+    networks:
+      - ansible-net
+
+networks:
+  ansible-net:
+    driver: bridge
